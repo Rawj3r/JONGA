@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "465743372530",
+    "project_id": "jonga-d4b89"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465743372530:android:7f14831a96442c6a",
+        "android_client_info": {
+          "package_name": "com.risencolab.rogernkosi.jonga"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsHb1WAjDdkSfBDMGyu80OaaieDb6-6o4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
