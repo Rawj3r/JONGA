@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_marginTop="25dip"
+        android:layout_gravity="center"
+        android:textSize="25dip"
+        android:text="ARMED"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_marginTop="25dip"
+        android:layout_marginRight="50dip"
+        android:layout_marginLeft="50dip"
+        android:layout_marginBottom="50dip"
+        android:src="@drawable/unit_once"
+        android:layout_width="wrap_content"
+        android:layout_height="280dip" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginRight="80dip"
+        android:layout_marginLeft="80dip"
+        android:textSize="25dip"
+        android:id="@+id/disarm"
+        android:text="DISARM"
+        android:background="#66BB6A"
+        android:layout_height="match_parent" />
+</LinearLayout>
+
+</ScrollView>

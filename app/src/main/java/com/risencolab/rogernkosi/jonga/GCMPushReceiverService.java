@@ -30,13 +30,14 @@ public class GCMPushReceiverService extends GcmListenerService {
         int requestCode = 0;//Your request code
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT);
 
-        Uri sound =  RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri sound =  RingtoneManager.getDefaultUri(RingtoneManager.URI_COLUMN_INDEX);
 
         NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentText("My GCM message :X:X")
                 .setContentText(message)
                 .setAutoCancel(true)
+                .setSound(sound)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
