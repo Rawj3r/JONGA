@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Callback;
@@ -27,7 +28,9 @@ public class APIController {
     }
 
     public void fetchContacts(){
-        restApiManager.getHomeAPi().getContacts(new Callback<String>() {
+        HashMap <String, String> map = new HashMap<>();
+        map.put("type", "contacts");
+        restApiManager.getHomeAPi().getContacts(map, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 Log.e(TAG, "JSON :: " + s);
@@ -37,9 +40,8 @@ public class APIController {
                     for (int i = 0; i < array.length(); i++){
                         JSONObject jsonObject = array.getJSONObject(i);
                         ContactsModel contactsModel = new ContactsModel.CBuilder()
-                                .setCcid(jsonObject.getInt("contactID"))
-                                .setCcname(jsonObject.getString("contatcName"))
-                                .setCcnumber(jsonObject.getString("ContactName"))
+                                .setCcname(jsonObject.getString("contactName"))
+                                .setCcnumber(jsonObject.getString("contactPhoneNumber"))
                                 .build();
                         listener.onFetchProgress(contactsModel);
                     }

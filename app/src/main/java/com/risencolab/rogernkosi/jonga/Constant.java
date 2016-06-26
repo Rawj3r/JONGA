@@ -5,7 +5,7 @@ package com.risencolab.rogernkosi.jonga;
  */
 public class Constant{
 
-    public static final String BASE_URL = "http://api.nkosiroger.co.za/reds";
+    public static final String BASE_URL = "http://jonga.co/jongas/";
     public static final String PHOTO_URL = BASE_URL + "/images/";
     public static final String CLIPS_URL = BASE_URL + "/clips/";
 
