@@ -3,9 +3,12 @@
 
     <item android:title="More Content">
         <menu>
-        <item
-            android:id="@+id/con"
-            android:title="Contacts" />
+            <item
+                android:id="@+id/con"
+                android:title="Contacts" />
+            <item
+                android:id="@+id/home"
+                android:title="Home" />
         </menu>
     </item>
 

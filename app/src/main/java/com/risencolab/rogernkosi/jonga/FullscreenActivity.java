@@ -1,5 +1,6 @@
 package com.risencolab.rogernkosi.jonga;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
@@ -27,23 +30,30 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.Status;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class FullscreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     Toolbar toolbar;
+    String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        new GetStatus().execute();
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_fullscreen);
 
         //Set the fragment initially
-        Ready fragment = new Ready();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
+
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -96,6 +106,101 @@ public class FullscreenActivity extends AppCompatActivity implements NavigationV
         setNavView();
         setTabIcons();
         connect();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        new GetStatus().execute();
+    }
+
+
+    class GetStatus extends AsyncTask<String, String, JSONObject>{
+
+        JSONPArser jsonParser = new JSONPArser();
+
+        ProgressDialog progressDialog;
+
+        String URL = "http://jonga.co/jongas/";
+
+        private static final String TAG_SUCCESS = "success";
+        private static final String TAG_MESSAGE = "message";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(FullscreenActivity.this);
+            progressDialog.setMessage("Getting view...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+
+            try {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("type", "status");
+                JSONObject object = jsonParser.makeHttpRequest(URL, "POST", hashMap);
+
+
+                if (object != null){
+                    Log.d("JSON result", object.toString());
+                    return object;
+                }
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+
+            int success = 0;
+            String message = "";
+
+            if (progressDialog != null){
+                progressDialog.dismiss();
+            }
+
+            try{
+                status = jsonObject.getString("data");
+                Log.e("status", status);
+
+                if (status.equals("1")){
+
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new Armed());
+                    fragmentTransaction.commit();
+
+                }else if (status.equals("2")){
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new Ready());
+                    fragmentTransaction.commit();
+                }else if (status.equals("3")){
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new Tripped());
+                    fragmentTransaction.commit();
+                }
+
+            }catch (JSONException e){
+
+            }
+        }
     }
 
     private void connect() {
@@ -160,6 +265,9 @@ public class FullscreenActivity extends AppCompatActivity implements NavigationV
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
+        }else if (id == R.id.home){
+            Intent i = new Intent(this, FullscreenActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

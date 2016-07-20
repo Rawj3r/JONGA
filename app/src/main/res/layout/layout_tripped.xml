@@ -21,7 +21,7 @@
             android:layout_marginTop="25dip"
             android:layout_marginRight="50dip"
             android:layout_marginLeft="50dip"
-            android:layout_marginBottom="50dip"
+            android:layout_marginBottom="30dip"
             android:src="@drawable/unit_three"
             android:layout_width="wrap_content"
             android:layout_height="280dip" />
@@ -30,16 +30,18 @@
             android:layout_width="match_parent"
             android:layout_marginRight="80dip"
             android:layout_marginLeft="80dip"
+            android:id="@+id/false_alarm"
             android:textSize="25dip"
-            android:text="ARM"
+            android:text="FALSE ALARM"
             android:background="#66BB6A"
-            android:layout_marginBottom="50dip"
+            android:layout_marginBottom="30dip"
             android:layout_height="match_parent" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_marginRight="80dip"
             android:layout_marginLeft="80dip"
+            android:id="@+id/call_police"
             android:textSize="25dip"
             android:text="CALL POLICE"
             android:background="#FF1744"
